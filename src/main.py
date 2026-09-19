@@ -1,6 +1,7 @@
 import psutil
 import platform
 import argparse
+import contextlib
 # import GPUtil
 def cpu_info():
     print(platform.processor())
@@ -61,21 +62,31 @@ def main():
         action="store_true",
         help="Подробный вывод"
     )
+    #аргумент путь к файлу
+    parser.add_argument(
+        "-o", "--output",
+        type=str,
+        help="Сохранить вывод в текстовый файл (например: report.txt)"
+    )
+    
     args = parser.parse_args()
     
-    if args.component == "cpu":
-        cpu_info()
-    elif args.component == "memory":
-        memory_info()
-    elif args.component == "disk":
-        disk_info()
-    #elif args.component == "gpu":
-    #    gpu_info()
-    elif args.component == "all":
-        cpu_info()
-        memory_info()
-        disk_info()
-        # gpu_info()
+    # Функция-обертка для запуска нужных модулей
+    def run_info():
+        if args.component in ["cpu", "all"]:
+            cpu_info()
+        if args.component in ["memory", "all"]:
+            memory_info()
+        if args.component in ["disk", "all"]:
+            disk_info()
+    if args.output:
+        with open(args.output, 'w', encoding='utf-8') as f:
+            with contextlib.redirect_stdout(f):
+                run_info()
+        print(f"Информация успешно сохранена в файл: {args.output}")
+    else:
+        # Если файл не указан, просто выводим в терминал
+        run_info()
 
 if __name__ == "__main__":
     main()
