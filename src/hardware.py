@@ -2,7 +2,6 @@ import psutil
 import platform
 import argparse
 import contextlib
-# import GPUtil
 def cpu_info():
     print(platform.processor())
     print("======\nCPU:")
@@ -37,19 +36,6 @@ def disk_info():
         print("Used", get_size(usage.used))
         print("Available", get_size(usage.free))
         print("======")
-"""def gpu_info():
-    gpus = GPUtil.getGPUs()
-    list_gpus = []
-    for gpu in gpus:
-        gpu_name = gpu.name
-        gpu_total_memory = f"{gpu.memoryTotal}MB"
-        gpu_temperature = f"{gpu.temperature} °C"
-        gpu_uuid = gpu.uuid
-        print("Name: ", gpu_name)
-        print("Memory: ", gpu_total_memory)
-        print("Temperature: ", gpu_temperature)
-        print("uuid: ", gpu_uuid)
-"""
 def main():
     parser = argparse.ArgumentParser(description="System monitor")
     parser.add_argument(
