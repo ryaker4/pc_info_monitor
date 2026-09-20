@@ -60,8 +60,6 @@ class SystemMonitorApp:
                         f"Использовано { get_size(usage.used)}\n"
                         f"Доступно { get_size(usage.free)}\n")
         return disk_text
-    
-        
 
     def update_info(self):
         # 1. Очищаем текстовое поле
@@ -72,7 +70,7 @@ class SystemMonitorApp:
         self.text_area.insert(tk.END, info)
         
         # 3. Планируем следующий вызов этой же функции через 2000 мс (2 секунды)
-        self.root.after(2000, self.update_info)
+        self.root.after(5000, self.update_info)
 
 if __name__ == "__main__":
     root = tk.Tk()
