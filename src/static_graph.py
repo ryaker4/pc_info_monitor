@@ -1,14 +1,29 @@
 import csv
+import os
 from datetime import datetime
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
+
+# Запрос имени файла у пользователя
+while True:
+    filename = input('Введите название файла с логами: ')
+    
+    if not filename.endswith('.csv'):
+        print('Ошибка: файл должен иметь расширение .csv')
+        continue
+    
+    if not os.path.exists(filename):
+        print(f'Ошибка: файл "{filename}" не найден')
+        continue
+    
+    break
 
 
 timestamps = []
 cpu_percent = []
 ram_percent = []
 
-with open('system_log.csv', 'r', encoding='utf-8') as file:
+with open(filename, 'r', encoding='utf-8') as file:
     reader = csv.DictReader(file)
     for row in reader:
         # Преобразуем timestamp в datetime объект
